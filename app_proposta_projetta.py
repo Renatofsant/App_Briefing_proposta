@@ -66,6 +66,12 @@ st.markdown(f"""
         border: 2px solid #c5a880; margin-top: 20px;
     }}
 
+    .desconto-box {{
+        background-color: #15803d; color: #ffffff;
+        padding: 10px; border-radius: 6px; text-align: center;
+        margin-bottom: 15px; font-weight: bold;
+    }}
+
     .stCheckbox, div[role="checkbox"], .stRadio, div[role="radiogroup"] label, button {{
         cursor: pointer !important;
     }}
@@ -99,123 +105,167 @@ st.markdown("### 🛠️ Personalize os Módulos do seu Projeto")
 total_projeto = 0.0
 itens_selecionados = []
 
-# --- MÓDULO 1: ESTRUTURA BASE ---
-st.markdown("#### 🌐 1. Estrutura e Design Base (Obrigatório)")
-with st.container():
-    st.markdown(f"""
-    <div class="pricing-card">
-        <strong style="color: #c5a880; font-size: 16px;">Core Setup + UI/UX Premium (R$ 950,00)</strong><br>
-        <span style="font-size: 13px; color: #64748b;">Inclui: Configuração de servidor na Hostinger, Otimização de Performance, SEO Base, Design Responsivo (Celular/Desktop), e Integração flutuante com WhatsApp.</span>
-    </div>
-    """, unsafe_allow_html=True)
-    total_projeto += 950.0
-    itens_selecionados.append("Core Setup + UI/UX Premium (R$ 950.00)")
+# --- MÓDULO 1: ESTRUTURA BASE (SITE) ---
+st.markdown("#### 🌐 1. Estrutura e Design Base do Site (Opcional)")
+ativou_site = st.checkbox("Incluir Criação do Site Institucional (Core Setup)", value=True, key="site_infra")
 
-    try:
-        st.image("mockup_home.png", caption="Conceito Visual: Estrutura Base Responsiva", use_container_width=True)
-    except:
-        pass
+if ativou_site:
+    with st.container():
+        st.markdown(f"""
+        <div class="pricing-card">
+            <strong style="color: #c5a880; font-size: 16px;">Core Setup + UI/UX Premium (R$ 950,00)</strong><br>
+            <span style="font-size: 13px; color: #64748b;">Inclui: Configuração de servidor na Hostinger, Otimização de Performance, SEO Base, Design Responsivo (Celular/Desktop), e Integração flutuante com WhatsApp.</span>
+        </div>
+        """, unsafe_allow_html=True)
+        total_projeto += 950.0
+        itens_selecionados.append("Core Setup + UI/UX Premium (R$ 950.00)")
 
-# --- MÓDULO 2: MAPA DE PÁGINAS ---
-st.markdown("#### 📄 2. Páginas Institucionais Adicionais")
-col_pag_dados, col_pag_img = st.columns([1.2, 1.0])
-
-with col_pag_dados:
-    p_somos = st.checkbox("Página Quem Somos / Institucional (+ R$ 100,00)", key="pag_somos")
-    p_serv = st.checkbox("Página de Serviços / Cursos (+ R$ 120,00)", key="pag_serv")
-    p_blog = st.checkbox("Blog estruturado para artigos (+ R$ 200,00)", key="pag_blog")
-    p_faq = st.checkbox("Central de Perguntas Frequentes (FAQ) (+ R$ 150,00)", key="pag_faq")
-
-    if p_somos: total_projeto += 100.0; itens_selecionados.append("Página Quem Somos (R$ 100.00)")
-    if p_serv: total_projeto += 120.0; itens_selecionados.append("Página de Serviços/Cursos (R$ 120.00)")
-    if p_blog: total_projeto += 200.0; itens_selecionados.append("Módulo Blog Estruturado (R$ 200.00)")
-    if p_faq: total_projeto += 150.0; itens_selecionados.append("Módulo Central de FAQ (R$ 150.00)")
-
-with col_pag_img:
-    if p_faq:
         try:
-            st.image("mockup_faq.png", caption="Conceito Visual: Central de Ajuda/FAQ", use_container_width=True)
-        except:
-            pass
-    elif p_blog:
-        try:
-            st.image("mockup_blog.png", caption="Conceito Visual: Blog de Conteúdo", use_container_width=True)
+            st.image("mockup_home.png", caption="Conceito Visual: Estrutura Base Responsiva", use_container_width=True)
         except:
             pass
 
-# --- MÓDULO 3: E-COMMERCE / LOJA (ESCALONADO) ---
-st.markdown("#### 🛍️ 3. Módulo de Loja Virtual (E-commerce)")
-ativou_loja = st.checkbox("Ativar Infraestrutura de Loja Virtual", key="loja_infra")
+# --- MÓDULO 2: MAPA DE PÁGINAS (Site ativo) ---
+if ativou_site:
+    st.markdown("#### 📄 2. Páginas Institucionais Adicionais")
+    col_pag_dados, col_pag_img = st.columns([1.2, 1.0])
 
-if ativou_loja:
-    col_loja_dados, col_loja_img = st.columns([1.2, 1.0])
+    with col_pag_dados:
+        p_somos = st.checkbox("Página Quem Somos / Institucional (+ R$ 100,00)", key="pag_somos")
+        p_serv = st.checkbox("Página de Serviços / Cursos (+ R$ 120,00)", key="pag_serv")
+        p_blog = st.checkbox("Blog estruturado para artigos (+ R$ 200,00)", key="pag_blog")
+        p_faq = st.checkbox("Central de Perguntas Frequentes (FAQ) (+ R$ 150,00)", key="pag_faq")
 
-    with col_loja_dados:
-        st.markdown("<div style='padding-left: 10px;'>", unsafe_allow_html=True)
-        porte_loja = st.radio(
-            "Selecione o volume estimado de produtos iniciais:",
-            [
-                "Loja Start (Até 20 produtos) - R$ 650,00",
-                "Loja Growth (De 21 a 100 produtos) - R$ 950,00",
-                "Loja Enterprise (Acima de 100 produtos) - R$ 1.450,00"
-            ],
-            key="porte_loja"
-        )
+        if p_somos: total_projeto += 100.0; itens_selecionados.append("Página Quem Somos (R$ 100.00)")
+        if p_serv: total_projeto += 120.0; itens_selecionados.append("Página de Serviços/Cursos (R$ 120.00)")
+        if p_blog: total_projeto += 200.0; itens_selecionados.append("Módulo Blog Estruturado (R$ 200.00)")
+        if p_faq: total_projeto += 150.0; itens_selecionados.append("Módulo Central de FAQ (R$ 150.00)")
 
-        if "Start" in porte_loja:
-            preco_loja = 650.0
-            nome_escopo_loja = "Loja Virtual Start"
-        elif "Growth" in porte_loja:
-            preco_loja = 950.0
-            nome_escopo_loja = "Loja Virtual Growth"
-        else:
-            preco_loja = 1450.0
-            nome_escopo_loja = "Loja Virtual Enterprise"
+    with col_pag_img:
+        if p_faq:
+            try:
+                st.image("mockup_faq.png", caption="Conceito Visual: Central de Ajuda/FAQ", use_container_width=True)
+            except:
+                pass
+        elif p_blog:
+            try:
+                st.image("mockup_blog.png", caption="Conceito Visual: Blog de Conteúdo", use_container_width=True)
+            except:
+                pass
 
-        total_projeto += preco_loja
-        itens_selecionados.append(f"{nome_escopo_loja} (R$ {preco_loja:.2f})")
+# --- MÓDULO 3: E-COMMERCE / LOJA (Site ativo) ---
+if ativou_site:
+    st.markdown("#### 🛍️ 3. Módulo de Loja Virtual (E-commerce)")
+    ativou_loja = st.checkbox("Ativar Infraestrutura de Loja Virtual", key="loja_infra")
 
-        st.markdown("---")
-        if st.checkbox("Cálculo de Frete Automatizado (+ R$ 200,00)", key="loja_frete"):
-            total_projeto += 200.0;
-            itens_selecionados.append("Cálculo de Frete Automatizado (R$ 200.00)")
-        if st.checkbox("Gateways de Pagamento (PIX, Cartão Automatizado) (+ R$ 250,00)", key="loja_payment"):
-            total_projeto += 250.0;
-            itens_selecionados.append("Gateways de Pagamento Integrados (R$ 250.00)")
+    if ativou_loja:
+        col_loja_dados, col_loja_img = st.columns([1.2, 1.0])
+
+        with col_loja_dados:
+            st.markdown("<div style='padding-left: 10px;'>", unsafe_allow_html=True)
+            porte_loja = st.radio(
+                "Selecione o volume estimado de produtos iniciais:",
+                [
+                    "Loja Start (Até 20 produtos) - R$ 650,00",
+                    "Loja Growth (De 21 a 100 produtos) - R$ 950,00",
+                    "Loja Enterprise (Acima de 100 produtos) - R$ 1.450,00"
+                ],
+                key="porte_loja"
+            )
+
+            if "Start" in porte_loja:
+                preco_loja = 650.0
+                nome_escopo_loja = "Loja Virtual Start"
+            elif "Growth" in porte_loja:
+                preco_loja = 950.0
+                nome_escopo_loja = "Loja Virtual Growth"
+            else:
+                preco_loja = 1450.0
+                nome_escopo_loja = "Loja Virtual Enterprise"
+
+            total_projeto += preco_loja
+            itens_selecionados.append(f"{nome_escopo_loja} (R$ {preco_loja:.2f})")
+
+            st.markdown("---")
+            if st.checkbox("Cálculo de Frete Automatizado (+ R$ 200,00)", key="loja_frete"):
+                total_projeto += 200.0;
+                itens_selecionados.append("Cálculo de Frete Automatizado (R$ 200.00)")
+            if st.checkbox("Gateways de Pagamento (PIX, Cartão Automatizado) (+ R$ 250,00)", key="loja_payment"):
+                total_projeto += 250.0;
+                itens_selecionados.append("Gateways de Pagamento Integrados (R$ 250.00)")
+            st.markdown("</div>", unsafe_allow_html=True)
+
+        with col_loja_img:
+            try:
+                st.image("mockup_loja.png", caption="Conceito Visual: E-commerce Mobile", use_container_width=True)
+            except:
+                pass
+
+# --- MÓDULO 4: FUNCIONALIDADES AVANÇADAS (Site ativo) ---
+if ativou_site:
+    st.markdown("#### ⚙️ 4. Funcionalidades Extras & Recursos de Marketing")
+    col_rec_dados, col_rec_img = st.columns([1.2, 1.0])
+
+    with col_rec_dados:
+        st.markdown("<div style='padding-left: 5px;'>", unsafe_allow_html=True)
+        ativou_membros = st.checkbox("Área de Membros / Login de Alientes (+ R$ 300,00)", key="rec_membros")
+        if ativou_membros: total_projeto += 300.0; itens_selecionados.append("Área de Membros (R$ 300.00)")
+
+        if st.checkbox("Sistema de Cupons de Desconto e Ofertas (+ R$ 100,00)", key="rec_cupons"):
+            total_projeto += 100.0;
+            itens_selecionados.append("Sistema de Cupons (R$ 100.00)")
+
+        if st.checkbox("Automação de E-mail Marketing / Captação (+ R$ 450,00)", key="rec_email"):
+            total_projeto += 450.0;
+            itens_selecionados.append("Automação de E-mail Marketing (R$ 450.00)")
+
+        if st.checkbox("Feed do Instagram dinâmico no rodapé (+ R$ 95,00)", key="rec_insta"):
+            total_projeto += 95.0;
+            itens_selecionados.append("Feed do Instagram (R$ 95.00)")
         st.markdown("</div>", unsafe_allow_html=True)
 
-    with col_loja_img:
+    with col_rec_img:
+        if ativou_membros:
+            try:
+                st.image("mockup_membros.png", caption="Conceito Visual: Dashboard de Alunos", use_container_width=True)
+            except:
+                pass
+
+# --- MÓDULO 5: AUTOMAÇÃO INTELIGENTE DE WHATSAPP ---
+st.markdown("#### 🤖 5. Automação Inteligente de WhatsApp")
+ativou_whatsapp = st.checkbox("Ativar Automação de WhatsApp (Urgent)", value=True, key="wa_infra")
+
+if ativou_whatsapp:
+    col_wa_dados, col_wa_img = st.columns([1.2, 1.0])
+
+    with col_wa_dados:
+        # Lógica de Desconto Inteligente baseada no Combo do Site
+        if ativou_site:
+            st.markdown("""
+                <div class="desconto-box">
+                    🔥 DESCONTO COMBO ATIVADO! R$ 250,00 economizados na Automação do WhatsApp por fechar com o site.
+                </div>
+            """, unsafe_allow_html=True)
+            preco_wa = 950.00
+            nome_escopo_wa = "Setup Automação WhatsApp (Desconto Combo)"
+        else:
+            preco_wa = 1200.00
+            nome_escopo_wa = "Setup Automação WhatsApp (Valor Avulso)"
+
+        total_projeto += preco_wa
+        itens_selecionados.append(f"{nome_escopo_wa} (R$ {preco_wa:.2f})")
+
+        st.markdown(f"""
+        <div class="pricing-card">
+            <strong style="color: #c5a880; font-size: 16px;">Core Setup WhatsApp + Fluxos de Áudio (R$ {preco_wa:,.2f})</strong><br>
+            <span style="font-size: 13px; color: #64748b;">Inclui: Homologação da API Oficial da Meta, configuração do ManyChat Pro, roteirização de boas-vindas/triagem, tratamento e conversão de áudios com a sua voz real (.ogg nativo) e delays simulando gravação em tempo real.</span>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with col_wa_img:
         try:
-            st.image("mockup_loja.png", caption="Conceito Visual: E-commerce Mobile", use_container_width=True)
-        except:
-            pass
-
-# --- MÓDULO 4: FUNCIONALIDADES AVANÇADAS ---
-st.markdown("#### ⚙️ 4. Funcionalidades Extras & Recursos de Marketing")
-col_rec_dados, col_rec_img = st.columns([1.2, 1.0])
-
-with col_rec_dados:
-    st.markdown("<div style='padding-left: 5px;'>", unsafe_allow_html=True)
-    ativou_membros = st.checkbox("Área de Membros / Login de Clientes (+ R$ 300,00)", key="rec_membros")
-    if ativou_membros: total_projeto += 300.0; itens_selecionados.append("Área de Membros (R$ 300.00)")
-
-    if st.checkbox("Sistema de Cupons de Desconto e Ofertas (+ R$ 100,00)", key="rec_cupons"):
-        total_projeto += 100.0;
-        itens_selecionados.append("Sistema de Cupons (R$ 100.00)")
-
-    if st.checkbox("Automação de E-mail Marketing / Captação (+ R$ 450,00)", key="rec_email"):
-        total_projeto += 450.0;
-        itens_selecionados.append("Automação de E-mail Marketing (R$ 450.00)")
-
-    if st.checkbox("Feed do Instagram dinâmico no rodapé (+ R$ 95,00)", key="rec_insta"):
-        total_projeto += 95.0;
-        itens_selecionados.append("Feed do Instagram (R$ 95.00)")
-    st.markdown("</div>", unsafe_allow_html=True)
-
-with col_rec_img:
-    if ativou_membros:
-        try:
-            st.image("mockup_membros.png", caption="Conceito Visual: Dashboard de Alunos", use_container_width=True)
+            st.image("mockup_fluxo_wa.png", caption="Conceito Visual: Resposta com Áudio Humano",
+                     use_container_width=True)
         except:
             pass
 
@@ -235,6 +285,7 @@ st.markdown(f"""
 *   **À vista no PIX (5% de Desconto):** R$ {total_projeto * 0.95:,.2f}
 *   **Parcelamento de Escopo:** Sinal de 50% (R$ {total_projeto * 0.5:,.2f}) + 50% na homologação final.
 *   **Cartão de Crédito:** Em até 6x fixas de R$ {total_projeto / 6:,.2f} sem juros.
+*   *Nota:* Licenciamentos operacionais do ManyChat Pro (U$ 29/mês) e taxas diretas da Meta por janelas de conversação são de responsabilidade direta do contratante.
 """)
 
 st.markdown("---")
@@ -246,23 +297,35 @@ if st.button("📝 ENVIAR CONFIGURAÇÃO E SOLICITAR CONTRATO", use_container_wi
         st.error("Por favor, preencha o campo 'Nome do Cliente / Empresa' na identificação inicial antes de submeter.")
     else:
         try:
-            # Conexão com o Google Sheets especificando a nova aba de propostas
+            # Conexão original segura e autorizada pelo arquivo 'secrets.toml'
             conn = st.connection("gsheets", type=GSheetsConnection)
 
-            # Estrutura os dados para gravação na planilha
+            # Garante que os dados sejam formatados como strings simples para evitar HTTP 400
             dados_proposta = {
-                "Data/Hora Envio": datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
-                "Empresa": nome_cliente,
-                "Responsavel": responsavel if responsavel else "Não informado",
-                "Valor Total": f"R$ {total_projeto:,.2f}",
-                "Itens Selecionados": " | ".join(itens_selecionados)
+                "Data/Hora Envio": str(datetime.now().strftime("%d-%m-%Y %H:%M:%S")),
+                "Empresa": str(nome_cliente),
+                "Responsavel": str(responsavel) if responsavel else "Não informado",
+                "Valor Total": str(f"R$ {total_projeto:,.2f}"),
+                "Itens Selecionados": str(" | ".join(itens_selecionados))
             }
 
-            df_novo = pd.DataFrame([dados_proposta])
+            # Cria o DataFrame garantindo tipo object (string) para todas as colunas
+            df_novo = pd.DataFrame([dados_proposta]).astype(str)
 
-            # Alvo explícito: Grava na aba 'Propostas_Simuladas'
+            # Lendo a planilha usando as credenciais do secrets.toml
             df_existente = conn.read(worksheet="Propostas_Simuladas")
-            df_final = pd.concat([df_existente, df_novo], ignore_index=True)
+
+            # Remove linhas completamente vazias que possam atrapalhar a concatenação
+            if df_existente is not None and not df_existente.empty:
+                df_existente = df_existente.dropna(how="all")
+                df_final = pd.concat([df_existente, df_novo], ignore_index=True)
+            else:
+                df_final = df_novo
+
+            # Garante que todo o DataFrame final seja convertido para string antes de subir
+            df_final = df_final.astype(str)
+
+            # Atualiza na planilha usando as credenciais do secrets.toml
             conn.update(worksheet="Propostas_Simuladas", data=df_final)
 
             st.balloons()
