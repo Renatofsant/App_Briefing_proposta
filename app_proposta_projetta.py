@@ -280,7 +280,7 @@ st.markdown("#### 💳 Condições Especiais de Pagamento sugeridas pela Projett
 st.markdown(f"""
 *   **À vista no PIX (5% de Desconto):** R$ {total_projeto * 0.95:,.2f}
 *   **Parcelamento de Escopo:** Sinal de 50% (R$ {total_projeto * 0.5:,.2f}) + 50% na homologação final.
-*   **Cartão de Crédito:** Em até 6x fixas de R$ {total_projeto / 6:,.2f} sem juros.
+*   **Cartão de Crédito:** Em até 10x fixas de R$ {total_projeto / 10:,.2f} sem juros.
 *   *Nota:* Licenciamentos operacionais do ManyChat Pro (U$ 29/mês) e taxas diretas da Meta por janelas de conversação são de responsabilidade direta do contratante.
 """)
 
