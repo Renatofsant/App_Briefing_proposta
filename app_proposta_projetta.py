@@ -208,16 +208,12 @@ if ativou_site:
 
     with col_rec_dados:
         st.markdown("<div style='padding-left: 5px;'>", unsafe_allow_html=True)
-        ativou_membros = st.checkbox("Área de Membros / Login de Alientes (+ R$ 300,00)", key="rec_membros")
+        ativou_membros = st.checkbox("Área de Membros / Login de Clientes (+ R$ 300,00)", key="rec_membros")
         if ativou_membros: total_projeto += 300.0; itens_selecionados.append("Área de Membros (R$ 300.00)")
 
         if st.checkbox("Sistema de Cupons de Desconto e Ofertas (+ R$ 100,00)", key="rec_cupons"):
             total_projeto += 100.0;
             itens_selecionados.append("Sistema de Cupons (R$ 100.00)")
-
-        if st.checkbox("Automação de E-mail Marketing / Captação (+ R$ 450,00)", key="rec_email"):
-            total_projeto += 450.0;
-            itens_selecionados.append("Automação de E-mail Marketing (R$ 450.00)")
 
         if st.checkbox("Feed do Instagram dinâmico no rodapé (+ R$ 95,00)", key="rec_insta"):
             total_projeto += 95.0;
